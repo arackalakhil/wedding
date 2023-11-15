@@ -16,6 +16,24 @@
     <link rel="stylesheet" href="css/YouTubePopUp.css">
     <link rel="stylesheet" href="css/vegas.slider.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        .floatmute {
+            position: fixed;
+            width: 35px;
+            height: 35px;
+            top: 40px;
+            right: 23px;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            padding-top: 4px;
+            background: rgba(0, 0, 0, 0.5);
+            font-size: 20px;
+            z-index: 100;
+        }
+    </style>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
         <script src="js/respond.min.js"></script>
@@ -83,6 +101,8 @@
 			</div>
 		</div>
 	</nav>
+
+    <audio loop="true" src="musik/musik.mp3" id="audio" ></audio>
     <!-- Slider section -->
     <div id="home" class="hero-section" data-overlay-dark="2" data-scroll-index="0">
         <div class="container hero-inner h-100">
@@ -566,6 +586,11 @@
             </div>
         </div>
     </div>
+    		<!-- MUTE BUTTON -->
+		<a id="mute" href="#/" onclick="mute()" class="floatmute" >
+			<i color="#fff" class="fa fa-volume-up my-float"></i>
+		</a>
+		<!-- MUTE BUTTON -->
     <!-- RSVP Form section -->
     <!-- <div id="rsvp" class="rsvp section-padding bg-img bg-fixed" data-background="images/banner/2.jpg" data-scroll-index="7">
         <div class="container">
@@ -728,5 +753,39 @@
             });
         });
     </script>
+    
+	<script>
+		document.addEventListener("DOMContentLoaded", function (event) {
+			let audio = document.getElementById("audio");
+			let button = document.getElementById('mute');
+			if (-localStorage.getItem('mute')) {
+				audio.muted = true;
+				button.innerHTML = '<i color="#000" class="fa fa-volume-off my-float"></i>';
+				audio.pause()
+			} else {
+				audio.volume = 0.9;
+				audio.play()
+			}
+		})
+
+		function mute() {
+			let audio = document.getElementById('audio');
+			let button = document.getElementById('mute');
+			let isMute = +localStorage.getItem('mute');
+			if (!isMute) {
+				audio.muted = true;
+				audio.pause()
+				button.innerHTML = '<i color="#000" class="fa fa-volume-off my-float"></i>';
+				localStorage.setItem('mute', 1);
+			} else {
+				audio.muted = false;
+				audio.volume = 0.9;
+				audio.play()
+				button.innerHTML = '<i color="#fff" class="fa fa-volume-up my-float"></i>';
+				localStorage.setItem('mute', 0);
+
+			}
+		}
+	</script>
 </body>
 </html>
